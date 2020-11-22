@@ -1,28 +1,6 @@
 node {
-    stages{   
-        stage('Docker node test') {
-      agent {
-        docker {
-          image 'node:7-alpine'
-          args '--name docker-node' // list any args
-        }
-      }
-      steps {
-        // Steps run in node:7-alpine docker container on docker slave
-        sh 'node --version'
-      }
-    }
+    def app
 
-    stage('Docker maven test') {
-      agent {
-        docker {
-          image 'maven:3-alpine'
-        }
-      }
-      steps {
-        // Steps run in maven:3-alpine docker container on docker slave
-        sh 'mvn --version'
-      }
     stage('Clone repository') {
         /* Let's make sure we have the repository cloned to our workspace */
 
@@ -33,7 +11,7 @@ node {
         /* This builds the actual image; synonymous to
          * docker build on the command line */
 
-        app = docker.build("releaseworks/hellonode")
+        app = docker.build("getintodevops/hellonode")
     }
 
     stage('Test image') {
@@ -55,5 +33,4 @@ node {
             app.push("latest")
         }
     }
-  }
 }
