@@ -1,7 +1,7 @@
 node {
     
     stage('Install dependencies') {
-        steps {
+       
         script {
       def dockerTool = tool name: 'docker', type: 'org.jenkinsci.plugins.docker.commons.tools.DockerTool'
       withEnv(["DOCKER=${dockerTool}/bin"]) {
@@ -10,7 +10,7 @@ node {
       }
     }
   }
-    }
+    
 
     stage('Clone repository') {
         /* Let's make sure we have the repository cloned to our workspace */
